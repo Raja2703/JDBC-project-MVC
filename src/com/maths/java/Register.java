@@ -19,9 +19,9 @@ public class Register extends Main{
 		Register.dob = dob;
 	}
 	
-	public static boolean isValid() {
-		String pattern1 = "[a-z0-9_]{5,12}"; // pattern for user name
-		String pattern2 = "[a-zA-Z0-9@!$%#&]{7,15}"; // pattern for user name
+	public boolean isValid() {
+		String pattern1 = "[a-z0-9_]{5,12}";                   // pattern for username
+		String pattern2 = "[a-zA-Z0-9@!$%#&]{7,15}";           // pattern for password
 		if(Pattern.matches(pattern1,uname) & Pattern.matches(pattern2,pass)) {
 			return true;
 		}else {
@@ -30,26 +30,13 @@ public class Register extends Main{
 		}
 	}
 	
-	public static String getMD5(String pass) {
-		String encryptedValue = null;
-		try {
-			MessageDigest md=MessageDigest.getInstance("MD5");
-			byte messagedigest[]=md.digest(pass.getBytes());
-			BigInteger bigInt = new BigInteger(1,messagedigest);
-			encryptedValue = bigInt.toString(16);
-			return encryptedValue;
-		}catch(NoSuchAlgorithmException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
-	
 	public static void register() throws SQLException {
 		
 		String query = "insert into user_cred values(?,?,?,?)";
 		try {
 			st = con.prepareStatement(query);
-			String encryptedPass = getMD5(pass);
+//			Encryption enc = new Encryption();
+			String encryptedPass = Encryption.getMD5(pass);
 			st.setString(1, uname);
 			st.setString(2, encryptedPass);
 			st.setString(3, email);

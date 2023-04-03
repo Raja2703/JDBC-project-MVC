@@ -7,11 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Main {
+abstract public class Main {
 	static Scanner in = new Scanner(System.in);
 	static Connection con = null;
 	static PreparedStatement st = null;
 	static ResultSet rs = null;
+	
+	abstract public boolean isValid();
 	
 	public static void main(String[] args) throws SQLException {
 		
@@ -46,14 +48,20 @@ public class Main {
 					break;
 					
 				case 2:
-					userName = in.nextLine();
+//					userName = in.nextLine();
 					System.out.print("Enter username:");
 					userName = in.nextLine();
 					userName = userName.toLowerCase();
 					System.out.print("Enter password:");
 					password = in.nextLine();
 					
-					Login login = new Login(userName,password);
+					Login lg = new Login(userName,password);
+					if(lg.isValid()) {
+						System.out.println("valid");
+						lg.login();
+					}else {
+						System.out.println("Invalid username or password");
+					}
 					break;
 				default:
 					System.out.println("Enter a valid choice");
