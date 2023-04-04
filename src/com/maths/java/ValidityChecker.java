@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class ValidityChecker {
+	
+	// username validation
 	public static boolean isUnameValid(String uname) {
 		String pattern1 = "[a-z0-9_]{5,12}";                   // pattern for username
 		if(Pattern.matches(pattern1,uname)) {
@@ -14,8 +16,15 @@ public class ValidityChecker {
 		}
 	}
 	
+	// password validation
 	public static boolean isPassValid(String pass) {
-		String pattern2 = "^" + "$";           // pattern for password
+		String pattern2 = "^(?=.*[0-9])"               // positive lookahead, digit [0-9]
+				+ "(?=.*[a-z])"						   // positive lookahead, one lowercase character [a-z]
+				+ "(?=.*[A-Z])"					       // positive lookahead, one uppercase character [A-Z]
+				+ "(?=.*[!@#&()–[{}]:;',?/*~$^+=<>])"  // positive lookahead, one of the special character in this [..]
+				+ "."								   //  matches anything
+				+ "{7,20}$";  						   // length at least 8 characters and maximum of 20 characters
+		
 		if(Pattern.matches(pattern2,pass)) {
 			return true;
 		}else {
@@ -24,10 +33,11 @@ public class ValidityChecker {
 		}
 	}
 	
+	// email validation
 	public static boolean isEmailValid(String email) {
-		String pattern2 = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-						  + "[A-Za-z0-9-]+(\\.[A-za-z0-9]+)*(\\.[A-za-z]{2,})$";           // pattern for email
-		if(Pattern.matches(pattern2,email)) {
+		String pattern3 = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+						  + "[A-Za-z0-9-]+(\\.[A-za-z0-9]+)*(\\.[A-za-z]{2,})$";    // pattern for email
+		if(Pattern.matches(pattern3,email)) {
 			return true;
 		}else {
 			System.out.println("Email did not meet the requirements");
