@@ -19,23 +19,11 @@ public class Register extends Main{
 		Register.dob = dob;
 	}
 	
-	public boolean isValid() {
-		String pattern1 = "[a-z0-9_]{5,12}";                   // pattern for username
-		String pattern2 = "[a-zA-Z0-9@!$%#&]{7,15}";           // pattern for password
-		if(Pattern.matches(pattern1,uname) & Pattern.matches(pattern2,pass)) {
-			return true;
-		}else {
-			System.out.println("username or password did not meet the requirements");
-			return false;
-		}
-	}
-	
 	public static void register() throws SQLException {
 		
 		String query = "insert into user_cred values(?,?,?,?)";
 		try {
 			st = con.prepareStatement(query);
-//			Encryption enc = new Encryption();
 			String encryptedPass = Encryption.getMD5(pass);
 			st.setString(1, uname);
 			st.setString(2, encryptedPass);
