@@ -1,16 +1,14 @@
 package com.maths.java;
 
-import java.util.regex.Pattern;
-
-public class Login extends Main{
+public class Login extends Main {
 	static String uname;
 	static String pass;
-	
-	public Login(String uname,String pass) {
+
+	public Login(String uname, String pass) {
 		Login.uname = uname;
 		Login.pass = pass;
 	}
-	
+
 	public static boolean login() {
 		String encryptedPass = Encryption.getMD5(pass);
 		String query = "select * from user_cred where uname=? and pass=?";
@@ -19,15 +17,15 @@ public class Login extends Main{
 			st.setString(1, uname);
 			st.setString(2, encryptedPass);
 			rs = st.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				System.out.println("Logged in!!!");
 				return true;
-			}else {
+			} else {
 				System.out.println("invalid username or password");
 //				return false;
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return false;

@@ -1,26 +1,22 @@
 package com.maths.java;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.regex.Pattern;
 
-public class Register extends Main{
+public class Register extends Main {
 	static String uname;
 	static String pass;
 	static String email;
 	static String dob;
-	
-	public Register(String uname,String pass,String email,String dob) {
+
+	public Register(String uname, String pass, String email, String dob) {
 		Register.uname = uname;
 		Register.pass = pass;
 		Register.email = email;
 		Register.dob = dob;
 	}
-	
+
 	public static void register() throws SQLException {
-		
+
 		String query = "insert into user_cred values(?,?,?,?)";
 		try {
 			st = con.prepareStatement(query);
@@ -30,10 +26,9 @@ public class Register extends Main{
 			st.setString(3, email);
 			st.setString(4, dob);
 			int count = st.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
-		
+
 	}
 }
