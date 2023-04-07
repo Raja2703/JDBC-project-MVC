@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 public class Register extends Main{
-	static String uname = null;
-	static String pass = null;
-	static String email = null;
-	static String dob= null;
+	static String uname;
+	static String pass;
+	static String email;
+	static String dob;
 	
 	public Register(String uname,String pass,String email,String dob) {
 		Register.uname = uname;

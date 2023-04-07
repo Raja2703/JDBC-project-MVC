@@ -44,7 +44,7 @@ public class ValidityChecker {
 			return false;
 		}
 	}
-	
+		
 	public static boolean isDobValid(String dob) {             // dob validator
         Calendar cal=Calendar.getInstance();
 

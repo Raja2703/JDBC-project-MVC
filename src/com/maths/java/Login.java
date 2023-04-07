@@ -3,15 +3,15 @@ package com.maths.java;
 import java.util.regex.Pattern;
 
 public class Login extends Main{
-	static String uname = null;
-	static String pass = null;
+	static String uname;
+	static String pass;
 	
 	public Login(String uname,String pass) {
 		Login.uname = uname;
 		Login.pass = pass;
 	}
 	
-	public static void login() {
+	public static boolean login() {
 		String encryptedPass = Encryption.getMD5(pass);
 		String query = "select * from user_cred where uname=? and pass=?";
 		try {
@@ -22,11 +22,14 @@ public class Login extends Main{
 			
 			if(rs.next()) {
 				System.out.println("Logged in");
+				return true;
 			}else {
 				System.out.println("invalid username or password");
+//				return false;
 			}
 		}catch(Exception e) {
 			System.out.println(e);
 		}
+		return false;
 	}
 }

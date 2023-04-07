@@ -9,13 +9,14 @@ import java.util.Scanner;
 
 public class Main {
 	static Scanner in = new Scanner(System.in);
-	static Connection con = null;
-	static PreparedStatement st = null;
-	static ResultSet rs = null;
+	static Connection con;
+	static PreparedStatement st;
+	static ResultSet rs;
 	
 	public static void main(String[] args) throws SQLException {
 		
 		try {
+			// Database connection
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Employee_details","root","Root@2709");
 			System.out.println("1. Register");
@@ -49,17 +50,36 @@ public class Main {
 					break;
 					
 				case 2:
+					boolean isLogged = false;
+					int loginFailCount = 0;
+					String resetChoice = null;
 					userName = in.nextLine();
-					System.out.print("Enter username:");
-					userName = in.nextLine();
-					userName = userName.toLowerCase();
-					System.out.print("Enter password:");
-					password = in.nextLine();
-					
-					Login lg = new Login(userName,password);
-					if(ValidityChecker.isUnameValid(userName)) {
-						if(ValidityChecker.isPassValid(password)) {
-							lg.login();
+					while(!isLogged) {
+						
+						System.out.print("Enter username:");
+						userName = in.nextLine();
+						userName = userName.toLowerCase();
+//						System.out.print("Enter password:");
+//						password = in.nextLine();
+						password = "Lemongrass@2709";
+						
+						Login lg = new Login(userName,password);
+						if(ValidityChecker.isUnameValid(userName)) {
+							if(ValidityChecker.isPassValid(password)) {
+								isLogged = lg.login();
+								if(!isLogged) {
+									loginFailCount++;
+								}
+								if(loginFailCount >= 2) {
+									System.out.print("Do you want to reset password(y/n): ");
+									resetChoice = in.nextLine();
+									if(resetChoice.equals("y")) {
+										System.out.println("inside email block");
+										PrepareEmail mail = new PrepareEmail();
+										mail.mail();
+									}
+								}
+							}
 						}
 					}
 					break;
