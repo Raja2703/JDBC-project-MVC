@@ -12,9 +12,15 @@ import javax.mail.internet.MimeMessage;
 
 
 public class PrepareEmail extends Main{
+	static String uname;
+	
+	public PrepareEmail(String uname) {
+		PrepareEmail.uname = uname;
+	}
+	
 	public void mail() {
 		String smtpHostServer = "smtp.gmail.com";
-		System.out.println("Enter email to send otp: ");
+		System.out.print("Enter email to send otp: ");
 		String toEmail = in.nextLine();
 		
 		Properties props = System.getProperties();
@@ -31,11 +37,15 @@ public class PrepareEmail extends Main{
 	       return new PasswordAuthentication(from,appPassword);  
 	   }  
 	   });
+	    
+	    int min = 2000;
+	    int max = 9000;
+	    int OTP = min + (int)(Math.random() * ((max-min)+1));
 		
-		sendEmail(session, toEmail, "otp","otp = 1214");
+		sendEmail(session, toEmail, "OTP verification",OTP);
 	}
 	
-	public void sendEmail(Session session,String toEmail,String subject, String body) {
+	public void sendEmail(Session session,String toEmail,String subject, int OTP) {
 		try {
 			MimeMessage msg = new MimeMessage(session);
 			//set message headers
@@ -44,14 +54,17 @@ public class PrepareEmail extends Main{
 		    msg.addHeader("Content-Transfer-Encoding", "8bit");
 		    
 		    msg.setFrom(new InternetAddress("srajasep27@gmail.com"));
-//		    msg.setReplyTo(InternetAddress.parse("srajasep27@gmail.com",false));
 		    msg.setSubject(subject);
-		    msg.setText(body);
+		    msg.setText("Enter this OTP to generate new password\n\n OTP = "+OTP);
 		    msg.setSentDate(new Date());
 		    msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail,false));
-		    System.out.println("Message is ready");
+		    System.out.println("\nMessage is ready");
 		    Transport.send(msg);
 		    System.out.println("Email sent successfully");
+		    
+		    ResetPassword reset = new ResetPassword(OTP,uname);
+		    reset.resetPass();
+		    
 		}catch(Exception e) {
 			System.out.println(e);
 		}

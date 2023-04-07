@@ -21,7 +21,7 @@ public class Login extends Main{
 			rs = st.executeQuery();
 			
 			if(rs.next()) {
-				System.out.println("Logged in");
+				System.out.println("Logged in!!!");
 				return true;
 			}else {
 				System.out.println("invalid username or password");

@@ -26,6 +26,8 @@ public class Main {
 			
 			switch(choice) {
 				case 1:
+					
+					System.out.println("\nSign up");
 					String userName = in.nextLine();
 					System.out.print("Enter username:");
 					userName = in.nextLine();
@@ -56,12 +58,12 @@ public class Main {
 					userName = in.nextLine();
 					while(!isLogged) {
 						
+						System.out.println("\nLogin");
 						System.out.print("Enter username:");
 						userName = in.nextLine();
 						userName = userName.toLowerCase();
-//						System.out.print("Enter password:");
-//						password = in.nextLine();
-						password = "Lemongrass@2709";
+						System.out.print("Enter password:");
+						password = in.nextLine();
 						
 						Login lg = new Login(userName,password);
 						if(ValidityChecker.isUnameValid(userName)) {
@@ -71,12 +73,12 @@ public class Main {
 									loginFailCount++;
 								}
 								if(loginFailCount >= 2) {
-									System.out.print("Do you want to reset password(y/n): ");
+									System.out.print("\nDo you want to reset password(y/n): ");
 									resetChoice = in.nextLine();
 									if(resetChoice.equals("y")) {
-										System.out.println("inside email block");
-										PrepareEmail mail = new PrepareEmail();
+										PrepareEmail mail = new PrepareEmail(userName);
 										mail.mail();
+										loginFailCount = 0;
 									}
 								}
 							}
