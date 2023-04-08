@@ -15,7 +15,8 @@ public class ResetPassword extends Main {
 
 	public static void resetPass() throws SQLException {
 		int failCount = 0;
-		while (failCount < 4) {
+		int chance = 3;
+		while (failCount < 3) {
 			System.out.print("\nEnter OTP: ");
 			int enteredOtp = in.nextInt();
 			if (enteredOtp == OTP) {
@@ -37,8 +38,17 @@ public class ResetPassword extends Main {
 					System.out.println(e);
 				}
 			} else {
-				System.out.println("Wrong OTP entered. Please try again!");
+				chance--;
+				if(chance!=0)
+					System.out.println("Wrong OTP entered. Please try again!");
+				else
+					System.out.println("Wrong OTP entered");
+				if(chance!=1)
+					System.out.println("You have "+chance+" chances left");
+				else
+					System.out.println("You have "+chance+" chance left");
 				failCount++;
+				
 			}
 		}
 	}

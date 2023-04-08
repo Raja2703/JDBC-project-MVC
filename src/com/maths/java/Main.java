@@ -64,7 +64,7 @@ public class Main {
 					int loginFailCount = 0;
 					String resetChoice = null;
 					userName = in.nextLine();
-					while (!isLogged && loginFailCount < 4) {
+					while (!isLogged && loginFailCount < 3) {
 
 						System.out.println("\nLogin");
 						System.out.print("Enter username: ");
