@@ -71,10 +71,10 @@ public class ValidityChecker {
         int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         if(month <= 12 && date<=maxDay){
-            System.out.println("valid");
+//            System.out.println("valid");
             return true;
         }else{
-            System.out.println("Invalid");
+            System.out.println("Invalid DOB");
             return false;
         }
     }

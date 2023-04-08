@@ -12,7 +12,11 @@ public class Main {
 	static Connection con;
 	static PreparedStatement st;
 	static ResultSet rs;
-
+	static String userName;
+	static String password;
+	static String email;
+	static String dob;
+	
 	public static void main(String[] args) throws SQLException {
 
 		try {
@@ -28,27 +32,30 @@ public class Main {
 			case 1:
 
 				System.out.println("\nSign up");
-				String userName = in.nextLine();
-				System.out.print("Enter username:");
 				userName = in.nextLine();
-				userName = userName.toLowerCase();
-				System.out.print("Enter password:");
-				String password = in.nextLine();
-				System.out.print("Enter email:");
-				String email = in.nextLine();
-				System.out.print("Enter dob:");
-				String dob = in.nextLine();
+				do {
+					System.out.print("Enter username:");
+					userName = in.nextLine();
+					userName = userName.toLowerCase();
+				}while(!ValidityChecker.isUnameValid(userName));
+				
+				do {
+					System.out.print("Enter password:");
+					password = in.nextLine();
+				}while(!ValidityChecker.isPassValid(password));
+				
+				do {
+					System.out.print("Enter email:");
+					email = in.nextLine();
+				}while(!ValidityChecker.isEmailValid(email));
+				
+				do {
+					System.out.print("Enter dob:");
+					dob = in.nextLine();
+				}while(!ValidityChecker.isDobValid(dob));
 
 				Register rg = new Register(userName, password, email, dob);
-				if (ValidityChecker.isUnameValid(userName)) {
-					if (ValidityChecker.isPassValid(password)) {
-						if (ValidityChecker.isEmailValid(email)) {
-							if (ValidityChecker.isDobValid(dob)) {
-								rg.register();
-							}
-						}
-					}
-				}
+				rg.register();
 				break;
 
 			case 2:

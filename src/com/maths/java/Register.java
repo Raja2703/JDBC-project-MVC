@@ -26,6 +26,7 @@ public class Register extends Main {
 			st.setString(3, email);
 			st.setString(4, dob);
 			int count = st.executeUpdate();
+			System.out.println("Registered successfullly");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

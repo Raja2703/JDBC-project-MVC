@@ -22,26 +22,37 @@ public class PrepareEmail extends Main {
 
 	public void mail() {
 		String smtpHostServer = "smtp.gmail.com";
-		System.out.print("Enter email to send otp: ");
-		String toEmail = in.nextLine();
-
-		Properties props = System.getProperties();
-		props.put("mail.smtp.host", smtpHostServer);
-		props.put("mail.smtp.starttls.enable", true);
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "587");
-
-		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(from, appPassword);
+		try {
+			String query = "select email from user_cred where uname=?";
+			st = con.prepareStatement(query);
+			st.setString(1, uname);
+			rs = st.executeQuery();
+			String toEmail = null;
+			while(rs.next()) {
+				toEmail = rs.getString(1);
 			}
-		});
 
-		int min = 2000;
-		int max = 9000;
-		int OTP = min + (int) (Math.random() * ((max - min) + 1));
+			Properties props = System.getProperties();
+			props.put("mail.smtp.host", smtpHostServer);
+			props.put("mail.smtp.starttls.enable", true);
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "587");
 
-		sendEmail(session, toEmail, "OTP verification", OTP);
+			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(from, appPassword);
+				}
+			});
+
+			int min = 2000;
+			int max = 9000;
+			int OTP = min + (int) (Math.random() * ((max - min) + 1));
+
+			sendEmail(session, toEmail, "OTP verification", OTP);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
 	}
 
 	public void sendEmail(Session session, String toEmail, String subject, int OTP) {
