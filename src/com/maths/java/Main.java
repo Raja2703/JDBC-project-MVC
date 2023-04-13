@@ -85,8 +85,10 @@ public class Main {
 									resetChoice = in.nextLine();
 									if (resetChoice.equals("y")) {
 										PrepareEmail mail = new PrepareEmail(userName);
-										mail.mail();
+										boolean isPasswordChanged = mail.mail();
 										loginFailCount = 0;
+										if(!isPasswordChanged)
+												break;
 									}
 								}
 							}

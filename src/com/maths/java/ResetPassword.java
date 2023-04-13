@@ -13,7 +13,7 @@ public class ResetPassword extends Main {
 		ResetPassword.uname = uname;
 	}
 
-	public static void resetPass() throws SQLException {
+	public static boolean resetPass() throws SQLException {
 		int failCount = 0;
 		int chance = 3;
 		while (failCount < 3) {
@@ -32,7 +32,7 @@ public class ResetPassword extends Main {
 						st.setString(2, uname);
 						int count = st.executeUpdate();
 						System.out.println("Password changed successfully\n");
-						break;
+						return true;
 					}
 				} catch (Exception e) {
 					System.out.println(e);
@@ -45,11 +45,14 @@ public class ResetPassword extends Main {
 					System.out.println("Wrong OTP entered");
 				if(chance!=1)
 					System.out.println("You have "+chance+" chances left");
-				else
+				else {
 					System.out.println("You have "+chance+" chance left");
+//					return false;
+				}
 				failCount++;
 				
 			}
 		}
+		return false;
 	}
 }

@@ -20,7 +20,7 @@ public class PrepareEmail extends Main {
 		PrepareEmail.uname = uname;
 	}
 
-	public void mail() {
+	public boolean mail() {
 		String smtpHostServer = "smtp.gmail.com";
 		try {
 			String query = "select email from user_cred where uname=?";
@@ -48,14 +48,17 @@ public class PrepareEmail extends Main {
 			int max = 9000;
 			int OTP = min + (int) (Math.random() * ((max - min) + 1));
 
-			sendEmail(session, toEmail, "OTP verification", OTP);
+			boolean isPasswordChanged= sendEmail(session, toEmail, "OTP verification", OTP);
+			if(isPasswordChanged)
+				return true;
 		}catch(Exception e) {
 			System.out.println(e);
 		}
+		return false;
 		
 	}
 
-	public void sendEmail(Session session, String toEmail, String subject, int OTP) {
+	public boolean sendEmail(Session session, String toEmail, String subject, int OTP) {
 		try {
 			MimeMessage msg = new MimeMessage(session);
 
@@ -69,10 +72,12 @@ public class PrepareEmail extends Main {
 			System.out.println("Email sent successfully");
 
 			ResetPassword reset = new ResetPassword(OTP, uname);
-			reset.resetPass();
-
+			boolean isPasswordChanged = reset.resetPass();
+			if(isPasswordChanged)
+				return true;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		return false;
 	}
 }
