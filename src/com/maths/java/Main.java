@@ -88,7 +88,7 @@ public class Main {
 										boolean isPasswordChanged = mail.mail();
 										loginFailCount = 0;
 										if(!isPasswordChanged)
-												break;
+											break;
 									}
 								}
 							}

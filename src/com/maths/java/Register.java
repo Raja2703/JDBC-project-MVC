@@ -15,7 +15,7 @@ public class Register extends Main {
 		Register.dob = dob;
 	}
 
-	public static void register() throws SQLException {
+	public void register() throws SQLException {
 
 		String query = "insert into user_cred values(?,?,?,?)";
 		try {

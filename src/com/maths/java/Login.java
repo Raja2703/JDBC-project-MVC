@@ -9,7 +9,7 @@ public class Login extends Main {
 		Login.pass = pass;
 	}
 
-	public static boolean login() {
+	public boolean login() {
 		String encryptedPass = Encryption.getMD5(pass);
 		String query = "select * from user_cred where uname=? and pass=?";
 		try {

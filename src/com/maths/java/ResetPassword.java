@@ -13,7 +13,7 @@ public class ResetPassword extends Main {
 		ResetPassword.uname = uname;
 	}
 
-	public static boolean resetPass() throws SQLException {
+	public boolean resetPass() throws SQLException {
 		int failCount = 0;
 		int chance = 3;
 		while (failCount < 3) {
@@ -30,7 +30,7 @@ public class ResetPassword extends Main {
 						st = con.prepareStatement(query);
 						st.setString(1, newEncryptedPass);
 						st.setString(2, uname);
-						int count = st.executeUpdate();
+						st.executeUpdate();
 						System.out.println("Password changed successfully\n");
 						return true;
 					}
@@ -47,7 +47,6 @@ public class ResetPassword extends Main {
 					System.out.println("You have "+chance+" chances left");
 				else {
 					System.out.println("You have "+chance+" chance left");
-//					return false;
 				}
 				failCount++;
 				
